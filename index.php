@@ -33,7 +33,6 @@ and open the template in the editor.
                 <div class="col-md-4">
                     
                     <?php
-                    //use same db all the time
                     $servername = "localhost";
                     $username = "root";
                     $password = "root";
@@ -46,15 +45,7 @@ and open the template in the editor.
                         die("Connection failed: " . $conn->connect_error);
                     }
 
-                    if (isset($_POST['send'])) {
-//                        $title = $_POST['title'];
-//                        $author = $_POST['author'];
-//                        $rating = $_POST['rating'];
-                        //debug
-//                        echo $title;
-//                        echo $author;
-//                        echo $rating;
-                        
+                    if (isset($_POST['send'])) {                      
                         // prepare and bind
                         $stmt = $conn->prepare("INSERT INTO books (id, title, author, rating) VALUES (NULL , ?, ?, ?)");
                         $stmt->bind_param("sss", $val1, $val2, $val3);
@@ -64,23 +55,10 @@ and open the template in the editor.
                         $val2 = $_POST['author'];
                         $val3 = $_POST['rating'];
                         $stmt->execute();
-
-
-//                        //insert via form    
-//                        $sql = "INSERT INTO books (id, title, author, rating)
-//                VALUES (NULL ,'" . $title . "', '" . $author . "', '" . $rating . "')";
-
-//                        if ($conn->query($sql) === TRUE) {
-//                            echo "<div class='alert alert-info'><strong>Info!</strong> Buch wurde eingetragen</div>";
-//                        } else {
-//                            echo "Error: " . $sql . "<br>" . $conn->error;
-//                        }
                     }
 
                     if (isset($_POST['delete'])) {
-                        
                         $id = $_POST['id'];
-                        // sql to delete a record
                         $sql = "DELETE FROM books WHERE id=$id ";
 
                         if ($conn->query($sql) === TRUE) {
@@ -90,8 +68,11 @@ and open the template in the editor.
                             echo $sql;
                         }
                     }
-                    echo "</div>";    
+                    
+                    //formatting
+                    echo "</div>"; //close line 33  col-md-4 
                     echo "<div class='col-md-4'><table class='table table-striped'><thead><tr><th>ID</th><th>Titel</th><th>Autor</th><th>Ratin 0/10</th></tr></thead><tbody>";
+                    
                     $sql = "SELECT * FROM books";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
@@ -102,7 +83,8 @@ and open the template in the editor.
                     } else {
                         echo "0 results";
                     }
-                    echo "</tbody></table></div>";
+                    //formatting
+                    echo "</tbody></table></div>"; //close line 75 col-md-4
                     ?>
                 </div>
             </div>
